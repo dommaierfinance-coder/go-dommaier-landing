@@ -3,8 +3,6 @@ import { useState } from "react";
 const ACCENT = "#C9A96E";
 const BG = "#0a0a0a";
 const BORDER = "rgba(255,255,255,0.08)";
-const WEBHOOK = "https://hook.us2.make.com/nn5375ypqb8ripym0us9kmmk3b98p9qw";
-
 function PrivacyPolicy({ onClose }) {
   return (
     <div style={{ minHeight: "100vh", background: BG, fontFamily: "'Inter',-apple-system,sans-serif", color: "#fff", padding: "2rem 1rem" }}>
@@ -64,7 +62,7 @@ export default function LandingPage() {
     setError("");
     setLoading(true);
     try {
-      await fetch(WEBHOOK, {
+      await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -74,7 +72,6 @@ export default function LandingPage() {
           score: 0,
           score_cat: "facebook-lead",
           submittedAt: new Date().toISOString(),
-          message: `New Facebook lead: ${form.name.trim()} — ${form.phone.trim()} — ${form.email.trim()}`,
         }),
       });
     } catch (e) {}
