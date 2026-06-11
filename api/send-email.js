@@ -90,6 +90,29 @@ export default async function handler(req, res) {
     // Add to Klaviyo
     await addToKlaviyo(name, email, phone, score || 0, score_cat || 'unknown');
 
+    // Add to Supabase
+    try {
+      await fetch('https://kdpcfyugwzeaqudpatrs.supabase.co/rest/v1/Leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkcGNmeXVnd3plYXF1ZHBhdHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MzI2MDMsImV4cCI6MjA2NDIwODYwM30.qSfBgLlJWFOqmhRhNYFkPVLLTFTbVFnQmLNYBOpDoeg',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkcGNmeXVnd3plYXF1ZHBhdHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MzI2MDMsImV4cCI6MjA2NDIwODYwM30.qSfBgLlJWFOqmhRhNYFkPVLLTFTbVFnQmLNYBOpDoeg',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          Name: name,
+          Email: email,
+          Phone: phone,
+          Source: score_cat === 'facebook-lead' ? 'Facebook Ad' : 'Mortgage Quiz - Go Landing',
+          Score: score || 0,
+          created_at: new Date().toISOString()
+        })
+      });
+    } catch(e) {
+      console.error('Supabase error:', e);
+    }
+
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('Email error:', error);
