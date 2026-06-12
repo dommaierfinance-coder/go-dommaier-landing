@@ -43,7 +43,7 @@ function PrivacyPolicy({ onClose }) {
 }
 
 export default function LandingPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
+  const [form, setForm] = useState({ name: "", email: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
@@ -51,7 +51,7 @@ export default function LandingPage() {
   if (showPrivacy) return <PrivacyPolicy onClose={() => setShowPrivacy(false)} />;
 
   async function handleSubmit() {
-    if (!form.name.trim() || !form.email.trim() || !form.phone.trim()) {
+    if (!form.name.trim() || !form.email.trim()) {
       setError("Please fill in all fields.");
       return;
     }
@@ -68,7 +68,7 @@ export default function LandingPage() {
         body: JSON.stringify({
           name: form.name.trim(),
           email: form.email.trim(),
-          phone: form.phone.trim(),
+          phone: "",
           score: 0,
           score_cat: "facebook-lead",
           submittedAt: new Date().toISOString(),
@@ -136,7 +136,6 @@ export default function LandingPage() {
             {[
               { key: "name", label: "Full Name", placeholder: "Jane Smith", type: "text" },
               { key: "email", label: "Email Address", placeholder: "jane@example.com", type: "email" },
-              { key: "phone", label: "Phone Number", placeholder: "(555) 000-0000", type: "tel" },
             ].map(field => (
               <div key={field.key}>
                 <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.35rem" }}>{field.label}</div>
