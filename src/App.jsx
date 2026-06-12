@@ -76,6 +76,7 @@ export default function LandingPage() {
       });
     } catch (e) {}
     setLoading(false);
+    if (window.fbq) fbq('track', 'Lead');
     window.location.href = "https://mortgage.dommaierfinance.com";
   }
 
